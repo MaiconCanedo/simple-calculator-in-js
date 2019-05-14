@@ -1,0 +1,13 @@
+#valor {
+    width: 250;
+    margin-bottom: 5px;
+    font-size: 29px;
+    text-align: right;
+    padding: 2px;
+}
+
+.numero {
+    font-size: 40px;
+    width: 75px;
+    margin: 3px;
+}
