@@ -77,6 +77,9 @@ input;
 
         if (tecla === "Enter" || tecla === "=")
             mostrarResultado();
+
+        if (tecla === "_")
+            ;
     });
 
     $zero.addEventListener("click", event => {
@@ -85,7 +88,14 @@ input;
 
     }, false);
 
-    $ce.addEventListener("click", limpar, false);
+    $ce.addEventListener("click", event => {
+        let valorAtual = $inputValor.value;
+        if (isUmValor(valorAtual))
+            return;
+
+        let regex = new RegExp("" + getUltimoValor(valorAtual) + "$");
+        $inputValor.value = valorAtual.replace(regex, "")
+    }, false);
 
     $c.addEventListener("click", limpar, false);
 
@@ -155,11 +165,10 @@ input;
     }
 
     function mostrarResultado() {
-        var valorAtual = $inputValor.value;
-        if (separarValores(valorAtual).length == 1)
+        if (isUmValor($inputValor.value))
             return;
 
-        $inputValor.value = calcular(valorAtual);
+        $inputValor.value = calcular($inputValor.value);
     }
 
     let isZerado = valor => valor === "0";

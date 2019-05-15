@@ -17,6 +17,10 @@
         return valor.match(SEPARA_VALOR);
     }
 
+    function isUmValor(valor) {
+        return separarValores(valor).length === 1;
+    }
+
     function getUltimoValor(valor) {
         var valores = separarValores(valor);
         return valores[valores.length - 1];
