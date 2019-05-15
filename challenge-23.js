@@ -25,7 +25,6 @@ input;
 */
 
 (function (window, document) {
-    const ZERO = "0.";
     let travarZeroAEsquerda = true;
 
     let $um = document.querySelector("[data-js=um]");
@@ -51,59 +50,79 @@ input;
 
     let $inputValor = document.querySelector("[data-js=valor]");
 
-    $um.addEventListener("click", event => setValor("1"), false);
-    $dois.addEventListener("click", event => setValor("2"), false);
-    $tres.addEventListener("click", event => setValor("3"), false);
-    $quatro.addEventListener("click", event => setValor("4"), false);
-    $cinco.addEventListener("click", event => setValor("5"), false);
-    $seis.addEventListener("click", event => setValor("6"), false);
-    $sete.addEventListener("click", event => setValor("7"), false);
-    $oito.addEventListener("click", event => setValor("8"), false);
-    $nove.addEventListener("click", event => setValor("9"), false);
+    $um.addEventListener("click", event => addValor("1"), false);
+    $dois.addEventListener("click", event => addValor("2"), false);
+    $tres.addEventListener("click", event => addValor("3"), false);
+    $quatro.addEventListener("click", event => addValor("4"), false);
+    $cinco.addEventListener("click", event => addValor("5"), false);
+    $seis.addEventListener("click", event => addValor("6"), false);
+    $sete.addEventListener("click", event => addValor("7"), false);
+    $oito.addEventListener("click", event => addValor("8"), false);
+    $nove.addEventListener("click", event => addValor("9"), false);
 
     $zero.addEventListener("click", event => {
-        if (!isZerado($inputValor.value))
-            setValor("0");
+        if (!$inputValor.value === "0" || !travarZeroAEsquerda)
+            return addValor("0");
+
     }, false);
 
-    $ce.addEventListener("click", event => $inputValor.value = ZERO, false);
+    $ce.addEventListener("click", event => {
+        travarZeroAEsquerda = true;
+        $inputValor.value = "0";
+    }, false);
+
+    $c.addEventListener("click", event => {
+        travarZeroAEsquerda = true;
+        $inputValor.value = "0";
+    }, false);
 
     $backspace.addEventListener("click", event => {
+        travarZeroAEsquerda = true;
         let valorAtual = $inputValor.value;
 
         if (isZerado(valorAtual))
             return;
 
         valorAtual = valorAtual.substring(0, valorAtual.length - 1);
-        $inputValor.value = valorAtual || ZERO;
+        $inputValor.value = valorAtual || "0";
     }, false);
 
     $virgula.addEventListener("click", event => {
         let valorAtual = $inputValor.value;
         if (isZerado(valorAtual))
-            return travarZeroAEsquerda = true;
+            travarZeroAEsquerda = false;
 
         if (!/\./.test(valorAtual))
-            setValor(".");
+            addValor(".");
     });
 
     $maisOuMenos.addEventListener("click", event => {
         let valorAtual = $inputValor.value;
 
         if (/-/.test(valorAtual) || isZerado(valorAtual))
-            return $inputValor.value = $inputValor.value.replace("-", "");
+            return $inputValor.value = valorAtual.replace("-", "");
 
         $inputValor.value = "-" + $inputValor.value;
     });
 
-    function setValor(valor) {
+    $soma.addEventListener("click", event => {
+        $inputValor.valor = $inputValor.valor
+    }, false);
 
-        if (isZerado($inputValor.value) && )
+
+    function addOperador(operador) {
+        $inputValor.valor = $inputValor.valor.replace(/[+-*/]$/, operador);
+
+    }
+
+    function addValor(valor) {
+        if ($inputValor.value === "0" && travarZeroAEsquerda)
             $inputValor.value = "";
 
         $inputValor.value += valor;
+        travarZeroAEsquerda = true;
     }
 
-    let isZerado = valor => valor === ZERO;
+    let isZerado = valor => valor === "0";
 
 })(window, document);

@@ -1,13 +1,25 @@
 #valor {
-    width: 250;
+    width: 325px;
+    margin: 2px;
     margin-bottom: 5px;
-    font-size: 29px;
+    font-size: 36px;
     text-align: right;
     padding: 2px;
+    padding-right: 5px;
+    background-color: rgb(223, 235, 214);
 }
 
 .numero {
     font-size: 40px;
     width: 75px;
     margin: 3px;
+    padding: 3px;
+}
+
+div {
+    width: 338px;
+    margin: 0px;
+    padding: 10px;
+    background-color: whitesmoke;
+    border-radius: 12px;    
 }
