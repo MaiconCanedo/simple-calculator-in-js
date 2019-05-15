@@ -95,11 +95,15 @@ input;
 
     $maisOuMenos.addEventListener("click", event => {
         let valorAtual = $inputValor.value;
+        let ultimoValor = getUltimoValor(valorAtual);
+        let regex = new RegExp("" + ultimoValor + "$");
 
-        if (/-/.test(valorAtual) || isZerado(valorAtual))
-            return $inputValor.value = valorAtual.replace("-", "");
+        valorAtual = valorAtual.replace(regex, "");
 
-        $inputValor.value = "-" + $inputValor.value;
+        if (/-/.test(ultimoValor) || isZerado(valorAtual))
+            return $inputValor.value = valorAtual + ultimoValor.replace(/^-/, "");
+
+        $inputValor.value = valorAtual + "-" + ultimoValor;
     });
 
     $soma.addEventListener("click", event => addOperador("+"), false);
@@ -117,23 +121,12 @@ input;
         $inputValor.value += operador;
     }
 
-    function addOperador(operador) {
-        let valorAtual = $inputValor.value;
-        if (/[-+*/]$/.test(valorAtual))
-            return $inputValor.value = valorAtual.replace(/[-+*/]$/, operador);
-
-        $inputValor.value += operador;
-    }
-
     function addVirgula() {
         let valorAtual = $inputValor.value;
         if (isZerado(valorAtual))
             travarZeroAEsquerda = false;
 
-        let valores = valorAtual.match(getSeparaValor());
-        let valor = valores[valores.length - 1];
-
-        if (!/\./.test(valor))
+        if (!/\./.test(getUltimoValor(valorAtual)))
             addValor(".");
     }
 
@@ -162,7 +155,11 @@ input;
     }
 
     function mostrarResultado() {
-        $inputValor.value = calcular($inputValor.value);
+        var valorAtual = $inputValor.value;
+        if (separarValores(valorAtual).length == 1)
+            return;
+
+        $inputValor.value = calcular(valorAtual);
     }
 
     let isZerado = valor => valor === "0";

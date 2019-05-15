@@ -1,10 +1,6 @@
 {
     const SEPARA_VALOR = /(-?[\.\d]+)([-+\/*])?/g;
 
-    function getSeparaValor() {
-        return SEPARA_VALOR;
-    }
-
     let calculadora = {
         "+": (valor1, valor2) => valor1 + valor2,
         "-": (valor1, valor2) => valor1 - valor2,
@@ -19,6 +15,11 @@
 
     function separarValores(valor) {
         return valor.match(SEPARA_VALOR);
+    }
+
+    function getUltimoValor(valor) {
+        var valores = separarValores(valor);
+        return valores[valores.length - 1];
     }
 
     function getOperador(valor) {
@@ -40,8 +41,7 @@
             let valor2 = getNumero(valores[i + 1])
             let operador = getOperador(valores[i]);
 
-            if (i === 0)
-                acumulado = valor1;
+            if (i === 0) acumulado = valor1;
 
             acumulado = getOperacao(operador)(acumulado, valor2);
         }
