@@ -5,7 +5,8 @@
         "+": (valor1, valor2) => valor1 + valor2,
         "-": (valor1, valor2) => valor1 - valor2,
         "*": (valor1, valor2) => valor1 * valor2,
-        "/": (valor1, valor2) => valor1 / valor2
+        "/": (valor1, valor2) => valor1 / valor2,
+        "x": (valor1, valor2) => valor1
     }
 
     function getOperacao(operador) {
@@ -19,19 +20,20 @@
     function getOperador(valor) {
         let valores = valor.match(/[-+*\/]$/);
         if (valores == null)
-            return false;
+            return "x";
         return valores[0];
     }
 
     function getNumero(valor) {
-        return Number(valor.replace(/[^-\d]/, ""));
+        return Number(valor.replace(/[\D]$/, ""));
     }
 
     function calcular(valor) {
         let valores = separarValores(valor);
-        for (var i = 0; i < valores.length; i++) {
+        let acumulado = 0;
+        for (let i = 0; i < valores.length - 1; i++) {
             let valor1 = getNumero(valores[i]);
-            let valor2 = Number(valores[i + 1]);
+            let valor2 = getNumero(valores[i + 1])
             let operador = getOperador(valores[i]);
 
             if (i === 0)
@@ -42,8 +44,8 @@
         return acumulado;
     }
 
-    console.log(separarValores("1+2+3"));
-    console.log(getNumero("-1+"))
-    console.log(getOperador("-1+"))
-    console.log(calcular("1+2"));
+    // console.log(separarValores("-1+-2+-3"));
+    // console.log(getNumero("-1+"))
+    // console.log(getOperador("-1+"))
+    // console.log(calcular("-1+-2+-3"));
 }

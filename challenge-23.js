@@ -63,6 +63,7 @@ input;
 
     document.addEventListener("keydown", event => {
         let tecla = event.key;
+
         if (/^\d+$/g.test(tecla))
             addValor(tecla);
 
@@ -73,6 +74,9 @@ input;
         if (/[\.,]/.test(tecla)) addVirgula();
 
         if (/[-+*/]$/.test(tecla)) addOperador(tecla);
+
+        if (tecla === "Enter" || tecla === "=")
+            mostrarResultado();
     });
 
     $zero.addEventListener("click", event => {
@@ -102,6 +106,7 @@ input;
     $subtrai.addEventListener("click", event => addOperador("-"), false);
     $multiplica.addEventListener("click", event => addOperador("*"), false);
     $dividi.addEventListener("click", event => addOperador("/"), false);
+    $igual.addEventListener("click", mostrarResultado, false);
 
 
     function addOperador(operador) {
@@ -116,43 +121,47 @@ input;
         let valorAtual = $inputValor.value;
         if (/[-+*/]$/.test(valorAtual))
             return $inputValor.value = valorAtual.replace(/[-+*/]$/, operador);
-    
+
         $inputValor.value += operador;
     }
-    
+
     function addVirgula() {
         let valorAtual = $inputValor.value;
         if (isZerado(valorAtual))
             travarZeroAEsquerda = false;
-    
+
         if (!/\./.test(valorAtual))
             addValor(".");
     }
-    
+
     function addValor(valor) {
         if (isZerado($inputValor.value) && travarZeroAEsquerda)
             $inputValor.value = "";
-    
+
         $inputValor.value += valor;
         travarZeroAEsquerda = true;
     }
-    
+
     function apagarAEsquerda() {
         travarZeroAEsquerda = true;
         let valorAtual = $inputValor.value;
-    
+
         if (isZerado(valorAtual))
             return;
-    
+
         valorAtual = valorAtual.substring(0, valorAtual.length - 1);
         $inputValor.value = valorAtual || "0";
     }
-    
+
     function limpar() {
         travarZeroAEsquerda = true;
         $inputValor.value = "0";
     }
-    
+
+    function mostrarResultado() {
+        $inputValor.value = calcular($inputValor.value);
+    }
+
     let isZerado = valor => valor === "0";
-    
+
 })(window, document);
