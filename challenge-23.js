@@ -112,39 +112,47 @@ input;
         $inputValor.value += operador;
     }
 
+    function addOperador(operador) {
+        let valorAtual = $inputValor.value;
+        if (/[-+*/]$/.test(valorAtual))
+            return $inputValor.value = valorAtual.replace(/[-+*/]$/, operador);
+    
+        $inputValor.value += operador;
+    }
+    
     function addVirgula() {
         let valorAtual = $inputValor.value;
         if (isZerado(valorAtual))
             travarZeroAEsquerda = false;
-
+    
         if (!/\./.test(valorAtual))
             addValor(".");
     }
-
+    
     function addValor(valor) {
         if (isZerado($inputValor.value) && travarZeroAEsquerda)
             $inputValor.value = "";
-
+    
         $inputValor.value += valor;
         travarZeroAEsquerda = true;
     }
-
+    
     function apagarAEsquerda() {
         travarZeroAEsquerda = true;
         let valorAtual = $inputValor.value;
-
+    
         if (isZerado(valorAtual))
             return;
-
+    
         valorAtual = valorAtual.substring(0, valorAtual.length - 1);
         $inputValor.value = valorAtual || "0";
     }
-
+    
     function limpar() {
         travarZeroAEsquerda = true;
         $inputValor.value = "0";
     }
-
+    
     let isZerado = valor => valor === "0";
-
+    
 })(window, document);

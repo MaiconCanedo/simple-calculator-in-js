@@ -1,25 +1,49 @@
-#valor {
+input {
     width: 325px;
     margin: 2px;
+    color: black;
     margin-bottom: 5px;
-    font-size: 36px;
+    font-size: 45px;
     text-align: right;
     padding: 2px;
     padding-right: 5px;
-    background-color: rgb(223, 235, 214);
+    background-color: rgb(189, 212, 171);
+    font-family: alarm clock;
+}
+
+#fundo {
+    top: 19px;
+    left: 19px;
+    float: inline-start;
+    position: absolute;
+    opacity: 0.03;
 }
 
 .numero {
     font-size: 40px;
-    width: 75px;
+    width: 76px;
     margin: 3px;
-    padding: 3px;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+#igual {
+    border-color: rgb(203, 226, 218);
+    background-color: rgb(185, 223, 210);
 }
 
 div {
-    width: 338px;
+    width: 340px;
+    height: 390px;
     margin: 0px;
     padding: 10px;
     background-color: whitesmoke;
+    border: rgb(231, 227, 227);
+    border-style: outset;
     border-radius: 12px;    
+}
+
+@font-face {
+    font-family: alarm clock;
+    src: url("alarm clock.ttf");
 }
