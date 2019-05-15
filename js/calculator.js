@@ -1,6 +1,10 @@
 {
     const SEPARA_VALOR = /(-?[\.\d]+)([-+\/*])?/g;
 
+    function getSeparaValor() {
+        return SEPARA_VALOR;
+    }
+
     let calculadora = {
         "+": (valor1, valor2) => valor1 + valor2,
         "-": (valor1, valor2) => valor1 - valor2,

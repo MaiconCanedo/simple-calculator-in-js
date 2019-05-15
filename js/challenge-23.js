@@ -130,7 +130,10 @@ input;
         if (isZerado(valorAtual))
             travarZeroAEsquerda = false;
 
-        if (!/\./.test(valorAtual))
+        let valores = valorAtual.match(getSeparaValor());
+        let valor = valores[valores.length - 1];
+
+        if (!/\./.test(valor))
             addValor(".");
     }
 
