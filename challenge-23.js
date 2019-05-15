@@ -47,6 +47,7 @@ input;
     let $dividi = document.querySelector("[data-js=dividi]");
     let $virgula = document.querySelector("[data-js=virgula]");
     let $maisOuMenos = document.querySelector("[data-js=maisOuMenos]");
+    let $igual = document.querySelector("[data-js=igual]");
 
     let $inputValor = document.querySelector("[data-js=valor]");
 
@@ -60,41 +61,33 @@ input;
     $oito.addEventListener("click", event => addValor("8"), false);
     $nove.addEventListener("click", event => addValor("9"), false);
 
+    document.addEventListener("keydown", event => {
+        let tecla = event.key;
+        if (/^\d+$/g.test(tecla))
+            addValor(tecla);
+
+        if (tecla === "Backspace") apagarAEsquerda();
+
+        if (tecla === "Delete") limpar();
+
+        if (/[\.,]/.test(tecla)) addVirgula();
+
+        if (/[-+*/]$/.test(tecla)) addOperador(tecla);
+    });
+
     $zero.addEventListener("click", event => {
-        if (!$inputValor.value === "0" || !travarZeroAEsquerda)
+        if (!isZerado($inputValor.value) || !travarZeroAEsquerda)
             return addValor("0");
 
     }, false);
 
-    $ce.addEventListener("click", event => {
-        travarZeroAEsquerda = true;
-        $inputValor.value = "0";
-    }, false);
+    $ce.addEventListener("click", limpar, false);
 
-    $c.addEventListener("click", event => {
-        travarZeroAEsquerda = true;
-        $inputValor.value = "0";
-    }, false);
+    $c.addEventListener("click", limpar, false);
 
-    $backspace.addEventListener("click", event => {
-        travarZeroAEsquerda = true;
-        let valorAtual = $inputValor.value;
+    $backspace.addEventListener("click", apagarAEsquerda, false);
 
-        if (isZerado(valorAtual))
-            return;
-
-        valorAtual = valorAtual.substring(0, valorAtual.length - 1);
-        $inputValor.value = valorAtual || "0";
-    }, false);
-
-    $virgula.addEventListener("click", event => {
-        let valorAtual = $inputValor.value;
-        if (isZerado(valorAtual))
-            travarZeroAEsquerda = false;
-
-        if (!/\./.test(valorAtual))
-            addValor(".");
-    });
+    $virgula.addEventListener("click", addVirgula, false);
 
     $maisOuMenos.addEventListener("click", event => {
         let valorAtual = $inputValor.value;
@@ -105,22 +98,51 @@ input;
         $inputValor.value = "-" + $inputValor.value;
     });
 
-    $soma.addEventListener("click", event => {
-        $inputValor.valor = $inputValor.valor
-    }, false);
+    $soma.addEventListener("click", event => addOperador("+"), false);
+    $subtrai.addEventListener("click", event => addOperador("-"), false);
+    $multiplica.addEventListener("click", event => addOperador("*"), false);
+    $dividi.addEventListener("click", event => addOperador("/"), false);
 
 
     function addOperador(operador) {
-        $inputValor.valor = $inputValor.valor.replace(/[+-*/]$/, operador);
+        let valorAtual = $inputValor.value;
+        if (/[-+*/]$/.test(valorAtual))
+            return $inputValor.value = valorAtual.replace(/[-+*/]$/, operador);
 
+        $inputValor.value += operador;
+    }
+
+    function addVirgula() {
+        let valorAtual = $inputValor.value;
+        if (isZerado(valorAtual))
+            travarZeroAEsquerda = false;
+
+        if (!/\./.test(valorAtual))
+            addValor(".");
     }
 
     function addValor(valor) {
-        if ($inputValor.value === "0" && travarZeroAEsquerda)
+        if (isZerado($inputValor.value) && travarZeroAEsquerda)
             $inputValor.value = "";
 
         $inputValor.value += valor;
         travarZeroAEsquerda = true;
+    }
+
+    function apagarAEsquerda() {
+        travarZeroAEsquerda = true;
+        let valorAtual = $inputValor.value;
+
+        if (isZerado(valorAtual))
+            return;
+
+        valorAtual = valorAtual.substring(0, valorAtual.length - 1);
+        $inputValor.value = valorAtual || "0";
+    }
+
+    function limpar() {
+        travarZeroAEsquerda = true;
+        $inputValor.value = "0";
     }
 
     let isZerado = valor => valor === "0";
