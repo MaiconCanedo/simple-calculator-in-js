@@ -55,7 +55,7 @@ input {
     box-shadow: inset -4px -4px 18px -12px rgb(255, 191, 178);
 }
 
-div {
+.principal {
     width: 340px;
     height: 410px;
     margin: 0px;
