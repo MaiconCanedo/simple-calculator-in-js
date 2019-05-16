@@ -62,13 +62,17 @@ input;
         if (/^\d+$/g.test(tecla))
             addValor(tecla);
 
-        if (tecla === "Backspace") apagarAEsquerda();
+        if (tecla === "Backspace")
+            apagarAEsquerda();
 
-        if (tecla === "Delete" || tecla === "Escape") limparVisor();
+        if (tecla === "Delete" || tecla === "Escape")
+            limparVisor();
 
-        if (/[\.,]/.test(tecla)) addVirgula();
+        if (/[\.,]/.test(tecla))
+            addVirgula();
 
-        if (/[-+*/]$/.test(tecla)) addOperador(tecla);
+        if (/[-+*/]$/.test(tecla))
+            addOperador(tecla);
 
         if (tecla === "Enter" || tecla === "=")
             mostrarResultado();
@@ -144,7 +148,7 @@ input;
         if (isZerado(valorAtual))
             return;
 
-        valorAtual = valorAtual.substring(0, valorAtual.length - 1);
+        valorAtual = valorAtual.slice(0, -1);
         $inputVisor.value = valorAtual || "0";
     }
 

@@ -9,7 +9,7 @@ input {
   padding: 2px;
   padding-right: 5px;
   background-color: rgb(183, 207, 164);
-  font-family: alarm clock;
+  font-family: Alarm clock;
   border-radius: 8px;
   box-shadow: inset 0px 1px 10px -1px #0d2203;
 }
@@ -26,7 +26,8 @@ div {
 }
 
 .botao {
-  font-size: 40px;
+  font-family: Coolvetica; 
+  font-size: 36px;
   width: 97px;
   height: 62px;
   margin: 3px;
@@ -55,12 +56,12 @@ div {
   border-color: rgb(250, 130, 110);
   background-color: rgb(221, 85, 71);
   color: white;
-  box-shadow: inset -4px -4px 18px -12px rgb(255, 191, 178);
+  box-shadow: inset 5px 5px 18px -10px rgb(255, 192, 179);
 }
 
 .principal {
   width: 426px;
-  height: 420px;
+  height: 426px;
   margin: 0px;
   padding: 10px;
   background-color: rgb(230, 230, 230);
@@ -73,6 +74,11 @@ div {
 }
 
 @font-face {
-  font-family: alarm clock;
+  font-family: Alarm clock;
   src: url("../font/alarm clock.ttf");
+}
+
+@font-face {
+    font-family: Coolvetica;
+    src: url("../font/coolvetica\ rg.ttf");
 }
