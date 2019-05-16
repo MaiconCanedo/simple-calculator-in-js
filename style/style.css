@@ -1,75 +1,78 @@
 input {
-    width: 325px;
-    margin: 3px;
-    color: black;
-    margin-bottom: 15px;
-    font-size: 45px;
-    text-align: right;
-    padding: 2px;
-    padding-right: 5px;
-    background-color: rgb(183, 207, 164);
-    font-family: alarm clock;
-    border-radius: 8px;
-    box-shadow: inset 0px 1px 10px -1px #0d2203;
+  width: 410px;
+  height: 55px;
+  margin: 2px;
+  color: black;
+  margin-bottom: 15px;
+  font-size: 42.8px;
+  text-align: right;
+  padding: 2px;
+  padding-right: 5px;
+  background-color: rgb(183, 207, 164);
+  font-family: alarm clock;
+  border-radius: 8px;
+  box-shadow: inset 0px 1px 10px -1px #0d2203;
+}
+
+div {
+  width: 425px;
 }
 
 #fundo {
-    top: 19px;
-    left: 19px;
-    float: inline-start;
-    position: absolute;
-    opacity: 0.04;
+  top: 19px;
+  float: inline-start;
+  position: absolute;
+  opacity: 0.04;
 }
 
 .botao {
-    font-size: 40px;
-    width: 76px;
-    margin: 3px;
-    padding: 4px;
-    border-radius: 10px;
-    border-color: rgb(250, 250, 250);
-    background-color: rgb(241, 239, 239);
-    box-shadow: inset -5px -5px 14px -12px #242424;
+  font-size: 40px;
+  width: 97px;
+  height: 62px;
+  margin: 3px;
+  padding: 4px;
+  border-radius: 10px;
+  border-color: rgb(250, 250, 250);
+  background-color: rgb(241, 239, 239);
+  box-shadow: inset -5px -5px 14px -12px #242424;
 }
 
 .numero {
-    border-color: rgb(80, 80, 80);
-    background-color: rgb(26, 26, 26);
-    color: white;
-    box-shadow: inset 4px 4px 16px -12px #cccccc;
+  border-color: rgb(80, 80, 80);
+  background-color: rgb(26, 26, 26);
+  color: white;
+  box-shadow: inset 4px 4px 16px -12px #cccccc;
 }
 
 #igual {
-    border-color: rgb(113, 212, 178);
-    background-color: rgb(89, 175, 145);
-    color: white;
-    box-shadow: inset 4px 4px 14px -5px rgb(171, 255, 216);
+  border-color: rgb(113, 212, 178);
+  background-color: rgb(89, 175, 145);
+  color: white;
+  box-shadow: inset 4px 4px 14px -5px rgb(171, 255, 216);
 }
 
-#c,
-#ce,
-#backspace {
-    border-color: rgb(250, 130, 110);
-    background-color: rgb(221, 85, 71);
-    color: white;
-    box-shadow: inset -4px -4px 18px -12px rgb(255, 191, 178);
+.funcao {
+  border-color: rgb(250, 130, 110);
+  background-color: rgb(221, 85, 71);
+  color: white;
+  box-shadow: inset -4px -4px 18px -12px rgb(255, 191, 178);
 }
 
 .principal {
-    width: 340px;
-    height: 410px;
-    margin: 0px;
-    padding: 10px;
-    background-color: rgb(230, 230, 230);
-    border: rgb(236, 236, 236);
-    border-style: outset;
-    border-radius: 12px;
-    border-bottom-width: 5px;
-    border-right-width: 3px;
-    box-shadow: inset -4px -4px 14px -10px #242424;
+  width: 426px;
+  height: 420px;
+  margin: 0px;
+  padding: 10px;
+  background-color: rgb(230, 230, 230);
+  border: rgb(236, 236, 236);
+  border-style: outset;
+  border-radius: 12px;
+  border-bottom-width: 5px;
+  border-right-width: 3px;
+  box-shadow: inset -4px -4px 14px -10px #242424;
 }
 
 @font-face {
-    font-family: alarm clock;
-    src: url("../font/alarm clock.ttf");
+  font-family: alarm clock;
+  src: url("../font/alarm clock.ttf");
 }

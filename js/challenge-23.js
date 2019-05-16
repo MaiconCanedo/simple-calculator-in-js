@@ -27,39 +27,34 @@ input;
 (function (window, document) {
     let travarZeroAEsquerda = true;
 
-    let $um = document.querySelector("[data-js=um]");
-    let $dois = document.querySelector("[data-js=dois]");
-    let $tres = document.querySelector("[data-js=tres]");
-    let $quatro = document.querySelector("[data-js=quatro]");
-    let $cinco = document.querySelector("[data-js=cinco]");
-    let $seis = document.querySelector("[data-js=seis]");
-    let $sete = document.querySelector("[data-js=sete]");
-    let $oito = document.querySelector("[data-js=oito]");
-    let $nove = document.querySelector("[data-js=nove]");
-    let $zero = document.querySelector("[data-js=zero]");
+    let $inputVisor = document.querySelector("[data-js=visor]");
+    let $inputFundo = document.querySelector(".saida");
 
-    let $ce = document.querySelector("[data-js=ce]");
-    let $c = document.querySelector("[data-js=c]");
-    let $backspace = document.querySelector("[data-js=backspace]");
-    let $soma = document.querySelector("[data-js=soma]");
-    let $subtrai = document.querySelector("[data-js=subtrai]");
-    let $multiplica = document.querySelector("[data-js=multiplica]");
-    let $dividi = document.querySelector("[data-js=dividi]");
-    let $virgula = document.querySelector("[data-js=virgula]");
-    let $maisOuMenos = document.querySelector("[data-js=maisOuMenos]");
-    let $igual = document.querySelector("[data-js=igual]");
+    let $botoesNumero = document.querySelectorAll("[data-js=botaoNumero]");
+    let $botoesOperacao = document.querySelectorAll("[data-js=botaoOperacao]");
 
-    let $inputValor = document.querySelector("[data-js=valor]");
+    let $botaoZero = document.querySelector("[data-js=botaoZero]");
 
-    $um.addEventListener("click", event => addValor("1"), false);
-    $dois.addEventListener("click", event => addValor("2"), false);
-    $tres.addEventListener("click", event => addValor("3"), false);
-    $quatro.addEventListener("click", event => addValor("4"), false);
-    $cinco.addEventListener("click", event => addValor("5"), false);
-    $seis.addEventListener("click", event => addValor("6"), false);
-    $sete.addEventListener("click", event => addValor("7"), false);
-    $oito.addEventListener("click", event => addValor("8"), false);
-    $nove.addEventListener("click", event => addValor("9"), false);
+    let $botaoCE = document.querySelector("[data-js=botaoCE]");
+    let $botaoC = document.querySelector("[data-js=botaoC]");
+    let $botaoBackspace = document.querySelector("[data-js=botaoBackspace]");
+    let $botaoVirgula = document.querySelector("[data-js=botaoVirgula]");
+    let $botaoMaisOuMenos = document.querySelector("[data-js=botaoMaisOuMenos]");
+    let $botaoIgual = document.querySelector("[data-js=botaoIgual]");
+
+    $inputFundo.addEventListener("clik", event => console.log("Clicou!"), false);
+
+    Array.prototype.forEach.call($botoesNumero, function ($botaoNumero) {
+        $botaoNumero.addEventListener("click", event =>
+            addValor($botaoNumero.value), false);
+    });
+
+    Array.prototype.forEach.call($botoesOperacao, function ($botaoOperacao) {
+        $botaoOperacao.addEventListener("click", event =>
+            addOperador($botaoOperacao.value));
+    }, false);
+
+    $botaoIgual.addEventListener("click", mostrarResultado, false);
 
     document.addEventListener("keydown", event => {
         let tecla = event.key;
@@ -69,7 +64,7 @@ input;
 
         if (tecla === "Backspace") apagarAEsquerda();
 
-        if (tecla === "Delete") limpar();
+        if (tecla === "Delete" || tecla === "Escape") limparVisor();
 
         if (/[\.,]/.test(tecla)) addVirgula();
 
@@ -79,60 +74,54 @@ input;
             mostrarResultado();
 
         if (tecla === "_")
-            $maisOuMenos.click();
+            $botaoMaisOuMenos.click();
     });
 
-    $zero.addEventListener("click", event => {
-        if (!isZerado($inputValor.value) || !travarZeroAEsquerda)
+    $botaoZero.addEventListener("click", event => {
+        if (!isZerado($inputVisor.value) || !travarZeroAEsquerda)
             return addValor("0");
 
     }, false);
 
-    $ce.addEventListener("click", event => {
-        let valorAtual = $inputValor.value;
+    $botaoCE.addEventListener("click", event => {
+        let valorAtual = $inputVisor.value;
         if (isUmValor(valorAtual))
-            return;
+            return limparVisor();
 
         let regex = new RegExp("" + getUltimoValor(valorAtual) + "$");
-        $inputValor.value = valorAtual.replace(regex, "")
+        $inputVisor.value = valorAtual.replace(regex, "")
     }, false);
 
-    $c.addEventListener("click", limpar, false);
+    $botaoC.addEventListener("click", limparVisor, false);
 
-    $backspace.addEventListener("click", apagarAEsquerda, false);
+    $botaoBackspace.addEventListener("click", apagarAEsquerda, false);
 
-    $virgula.addEventListener("click", addVirgula, false);
+    $botaoVirgula.addEventListener("click", addVirgula, false);
 
-    $maisOuMenos.addEventListener("click", event => {
-        let valorAtual = $inputValor.value;
+    $botaoMaisOuMenos.addEventListener("click", event => {
+        let valorAtual = $inputVisor.value;
         let ultimoValor = getUltimoValor(valorAtual);
         let regex = new RegExp("" + ultimoValor + "$");
 
         valorAtual = valorAtual.replace(regex, "");
 
         if (/-/.test(ultimoValor) || isZerado(valorAtual))
-            return $inputValor.value = valorAtual + ultimoValor.replace(/^-/, "");
+            return $inputVisor.value = valorAtual + ultimoValor.replace(/^-/, "");
 
-        $inputValor.value = valorAtual + "-" + ultimoValor;
+        $inputVisor.value = valorAtual + "-" + ultimoValor;
     });
-
-    $soma.addEventListener("click", event => addOperador("+"), false);
-    $subtrai.addEventListener("click", event => addOperador("-"), false);
-    $multiplica.addEventListener("click", event => addOperador("*"), false);
-    $dividi.addEventListener("click", event => addOperador("/"), false);
-    $igual.addEventListener("click", mostrarResultado, false);
 
 
     function addOperador(operador) {
-        let valorAtual = $inputValor.value;
+        let valorAtual = $inputVisor.value;
         if (/[-+*/]$/.test(valorAtual))
-            return $inputValor.value = valorAtual.replace(/[-+*/]$/, operador);
+            apagarAEsquerda();
 
-        $inputValor.value += operador;
+        $inputVisor.value += operador;
     }
 
     function addVirgula() {
-        let valorAtual = $inputValor.value;
+        let valorAtual = $inputVisor.value;
         if (isZerado(valorAtual))
             travarZeroAEsquerda = false;
 
@@ -141,34 +130,34 @@ input;
     }
 
     function addValor(valor) {
-        if (isZerado($inputValor.value) && travarZeroAEsquerda)
-            $inputValor.value = "";
+        if (isZerado($inputVisor.value) && travarZeroAEsquerda)
+            $inputVisor.value = "";
 
-        $inputValor.value += valor;
+        $inputVisor.value += valor;
         travarZeroAEsquerda = true;
     }
 
     function apagarAEsquerda() {
         travarZeroAEsquerda = true;
-        let valorAtual = $inputValor.value;
+        let valorAtual = $inputVisor.value;
 
         if (isZerado(valorAtual))
             return;
 
         valorAtual = valorAtual.substring(0, valorAtual.length - 1);
-        $inputValor.value = valorAtual || "0";
+        $inputVisor.value = valorAtual || "0";
     }
 
-    function limpar() {
+    function limparVisor() {
         travarZeroAEsquerda = true;
-        $inputValor.value = "0";
+        $inputVisor.value = "0";
     }
 
     function mostrarResultado() {
-        if (isUmValor($inputValor.value))
+        if (isUmValor($inputVisor.value))
             return;
 
-        $inputValor.value = calcular($inputValor.value);
+        $inputVisor.value = calcular($inputVisor.value);
     }
 
     let isZerado = valor => valor === "0";
