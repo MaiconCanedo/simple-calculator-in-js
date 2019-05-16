@@ -79,7 +79,7 @@ input;
             mostrarResultado();
 
         if (tecla === "_")
-            ;
+            $maisOuMenos.click();
     });
 
     $zero.addEventListener("click", event => {
