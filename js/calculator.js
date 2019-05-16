@@ -1,16 +1,17 @@
 {
-    const SEPARA_VALOR = /(-?[\.\d]+)([-+\/*])?/g;
+    const SEPARA_VALOR = /(-?[\.\d]+)([-+*/])?/g;
 
     let calculadora = {
         "+": (valor1, valor2) => valor1 + valor2,
         "-": (valor1, valor2) => valor1 - valor2,
         "*": (valor1, valor2) => valor1 * valor2,
         "/": (valor1, valor2) => valor1 / valor2,
-        "x": (valor1, valor2) => valor1
+        "": (valor1, valor2) => ""
     }
 
-    function getOperacao(operador) {
-        return calculadora[operador];
+    function realizarOperacao(operador, valor1, valor2) {
+        // if (!operador) return "";
+        return calculadora[operador](Number(valor1), Number(valor2));
     }
 
     function separarValores(valor) {
@@ -27,14 +28,18 @@
     }
 
     function getOperador(valor) {
-        let valores = valor.match(/[-+*\/]$/);
+        let valores = valor.match(/[-+*/]$/);
         if (valores == null)
-            return "x";
+            return "";
         return valores[0];
     }
 
     function getNumero(valor) {
-        return Number(valor.replace(/[\D]$/, ""));
+        return valor.replace(/[\D]$/, "");
+    }
+
+    function contemOperador(valor) {
+        return /[-+*/]$/.test(valor);
     }
 
     function calcular(valor) {
@@ -47,13 +52,25 @@
 
             if (i === 0) acumulado = valor1;
 
-            acumulado = getOperacao(operador)(acumulado, valor2);
+            acumulado = realizarOperacao(operador, acumulado, valor2);
         }
         return acumulado;
     }
 
-    // console.log(separarValores("-1+-2+-3"));
-    // console.log(getNumero("-1+"))
-    // console.log(getOperador("-1+"))
-    // console.log(calcular("-1+-2+-3"));
+    function calcular(valor) {
+        let valores = separarValores(valor);
+        return valores.reduce(function (acumulado, atual) {
+            let valor1 = getNumero(acumulado);
+            let operador = getOperador(acumulado);
+            let valor2 = getNumero(atual);
+            let lastOperador = contemOperador(atual) ? getOperador(atual) : "";
+
+            return realizarOperacao(operador, valor1, valor2) + lastOperador;
+        });
+    }
+
+    console.log(separarValores("-1+-2+-3"));
+    console.log(getNumero("-1+"))
+    console.log(getOperador("-1+"))
+    console.log(calcular("1+2"));
 }
