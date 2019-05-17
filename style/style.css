@@ -18,11 +18,11 @@ div {
   width: 425px;
 }
 
-#fundo {
-  top: 19px;
+#visor {
+  top: 18.5px;
   float: inline-start;
   position: absolute;
-  opacity: 0.04;
+  opacity: 0.97;
 }
 
 .botao {

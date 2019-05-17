@@ -57,17 +57,18 @@
         return acumulado;
     }
 
-    function calcular(valor) {
-        let valores = separarValores(valor);
-        return valores.reduce(function (acumulado, atual) {
-            let valor1 = getNumero(acumulado);
-            let operador = getOperador(acumulado);
-            let valor2 = getNumero(atual);
-            let lastOperador = contemOperador(atual) ? getOperador(atual) : "";
+    //Outra solução
+    // function calcular(valor) {
+    //     let valores = separarValores(valor);
+    //     return valores.reduce(function (acumulado, atual) {
+    //         let valor1 = getNumero(acumulado);
+    //         let operador = getOperador(acumulado);
+    //         let valor2 = getNumero(atual);
+    //         let lastOperador = contemOperador(atual) ? getOperador(atual) : "";
 
-            return realizarOperacao(operador, valor1, valor2) + lastOperador;
-        });
-    }
+    //         return realizarOperacao(operador, valor1, valor2) + lastOperador;
+    //     });
+    // }
 
     console.log(separarValores("-1+-2+-3"));
     console.log(getNumero("-1+"))
