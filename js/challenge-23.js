@@ -143,15 +143,11 @@ input;
 
     function capturarTeclaPressionada(event) {
         acoesDasTeclas.filter(acao => acao.isValid(event.key))
-            .pop().action(event.key);
+            .forEach(acao => acao.action(event.key));
     }
 
 
     let acoesDasTeclas = [
-        {
-            isValid: tecla => true,
-            action: function () { }
-        },
         {
             isValid: tecla => /^\d+$/g.test(tecla),
             action: tecla => addValor(tecla)
