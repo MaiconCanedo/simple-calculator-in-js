@@ -1,7 +1,6 @@
 {
-    const SEPARA_VALOR = /(-?[\.\d]+)([-+*/])?/g;
-
-    let calculadora = {
+    "use strict";
+    const calculadora = {
         "+": (valor1, valor2) => valor1 + valor2,
         "-": (valor1, valor2) => valor1 - valor2,
         "*": (valor1, valor2) => valor1 * valor2,
@@ -10,48 +9,43 @@
     }
 
     function realizarOperacao(operador, valor1, valor2) {
-        // if (!operador) return "";
-        return calculadora[operador](Number(valor1), Number(valor2));
+        return calculadora[operador](valor1, valor2);
     }
 
-    function separarValores(valor) {
-        return valor.match(SEPARA_VALOR);
+    function separarValores(string) {
+        const SEPARA_VALORES =
+            new RegExp("(-?[\\.\\d]+)([" + getOperadores().join("") + "])?", "g");
+        return string.match(SEPARA_VALORES);
     }
 
-    function isUmValor(valor) {
-        return separarValores(valor).length === 1;
+    function contemUmValor(string) {
+        return separarValores(string).length === 1;
     }
 
     function getUltimoValor(valor) {
-        var valores = separarValores(valor);
-        return valores[valores.length - 1];
+        return separarValores(valor).pop();
     }
 
-    function getOperador(valor) {
-        let valores = valor.match(/[-+*/]$/);
+    function getOperador(string) {
+        let valores = string.match(getPegaOperadores());
         if (valores == null)
             return "";
         return valores[0];
     }
 
-    function getNumero(valor) {
-        return valor.replace(/[\D]$/, "");
+    function getNumero(string) {
+        return Number(string.replace(/[\D]$/, ""));
     }
 
-    function contemOperador(valor) {
-        return /[-+*/]$/.test(valor);
-    }
-
-    function calcular(valor) {
-        let valores = separarValores(valor);
+    function calcular(string) {
+        let valores = separarValores(string);
         let acumulado = 0;
         for (let i = 0; i < valores.length - 1; i++) {
             let valor1 = getNumero(valores[i]);
             let valor2 = getNumero(valores[i + 1])
             let operador = getOperador(valores[i]);
-
-            if (i === 0) acumulado = valor1;
-
+            if (i === 0)
+                acumulado = valor1;
             acumulado = realizarOperacao(operador, acumulado, valor2);
         }
         return acumulado;
@@ -69,9 +63,4 @@
     //         return realizarOperacao(operador, valor1, valor2) + lastOperador;
     //     });
     // }
-
-    console.log(separarValores("-1+-2+-3"));
-    console.log(getNumero("-1+"))
-    console.log(getOperador("-1+"))
-    console.log(calcular("1+2"));
 }
